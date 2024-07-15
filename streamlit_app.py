@@ -1,13 +1,19 @@
 import streamlit as st
-from scripts.qa_system import initialize_rag_system, ask_question
+from src.rag import RAG
 
-st.title("Local RAG System for JSON Data")
+# Initialize RAG system
+rag = RAG(dataset_path="data/arxiv-metadata-oai-snapshot.json")
 
-json_file = "data/arxiv-metadata-oai-snapshot.json"
-rag_chain = initialize_rag_system(json_file)
+st.title("Advanced Retrieval-Augmented Generation (RAG) System")
 
+# User input
 question = st.text_input("Enter your question:")
 
-if question:
-    answer = ask_question(rag_chain, question)
-    st.write("Answer:", answer)
+if st.button("Get Answer"):
+    if question:
+        with st.spinner("Retrieving documents and generating answer..."):
+            answer = rag.answer_question(question)
+            st.write("### Answer:")
+            st.write(answer)
+    else:
+        st.write("Please enter a question.")

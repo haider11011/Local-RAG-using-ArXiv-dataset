@@ -1,5 +1,8 @@
+torch
 langchain
 transformers
 pypdf
 faiss-cpu
 streamlit
+datasets
+bitsandbytes
